@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: MIT
 
+import "./ERC165.sol";
+import "./interfaces/IERC721.sol";
+
 pragma solidity ^0.8.0;
 
-contract ERC721 {
-
-    // Event for Transfer of tokens
-    event Transfer(address indexed _from , address indexed _to, uint256 indexed _tokenId);
-
-    // Event for Token Approvals
-    event Approval(address _approver, address _approved, uint256 _tokenId);
+contract ERC721 is ERC165, IERC721 {
 
     // mapping to get the address of owner for each token
     mapping(uint256 => address) private _tokenOwner;
