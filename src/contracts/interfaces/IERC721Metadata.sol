@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-interface ERC721Metdata{
+interface IERC721Metadata{
 
     function getName() external view returns(string memory);
 
