@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: MIT
 
+import "./ERC165.sol";
+import "./interfaces/IERC721.sol";
+
 pragma solidity ^0.8.0;
 
-contract ERC721 {
-
-    // Event for Transfer of tokens
-    event Transfer(address indexed _from , address indexed _to, uint256 indexed _tokenId);
-
-    // Event for Token Approvals
-    event Approval(address _approver, address _approved, uint256 _tokenId);
+contract ERC721 is ERC165, IERC721 {
 
     // mapping to get the address of owner for each token
     mapping(uint256 => address) private _tokenOwner;
@@ -16,6 +13,14 @@ contract ERC721 {
     mapping(address => uint256) private _ownedTokensCount;
     // mapping from token Id to the approved address
     mapping(uint256 => address) private _tokenIdApprovals;
+
+    constructor(){
+        registerInterface(
+            (bytes4(keccak256("balanceOf(address)")))
+            ^ (bytes4(keccak256("ownerOf(uint256)"))) 
+            ^ (bytes4(keccak256("transferFrom(address, address, uint256)")))
+            );
+    }
 
     function balanceOf(address _owner) public view returns(uint256) {
         require(_owner != address(0),"Error - Invalid owner address");
